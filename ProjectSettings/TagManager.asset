@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Space
+    uniqueID: 2135442547
+    locked: 0
+  - name: Stars
+    uniqueID: 2001299677
+    locked: 0
+  - name: Unit
+    uniqueID: 88749353
+    locked: 0
