@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 
 public class EnemyCtl : MonoBehaviour
 {
@@ -15,5 +11,12 @@ public class EnemyCtl : MonoBehaviour
         //正規化
         direction.Normalize();
         this.transform.position += direction * moveSpeed * Time.deltaTime; 
+    }
+
+    void OnTriggerEnter2D(Collider2D collider){
+        Debug.Log("hit" + collider.gameObject.tag);
+        if (collider.gameObject.tag == "PlayerBullet"){
+            Destroy(this.gameObject);
+        }
     }
 }
