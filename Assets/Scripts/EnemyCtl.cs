@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyCtl : MonoBehaviour
 {
     [SerializeField] int Speed;
+    [SerializeField] GameObject destroyedObject;
     private void FixedUpdate(){
         MoveEnemy(Vector3.down, Speed);
     }
@@ -14,8 +15,8 @@ public class EnemyCtl : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider){
-        Debug.Log("hit" + collider.gameObject.tag);
         if (collider.gameObject.tag == "PlayerBullet"){
+            Instantiate(destroyedObject, this.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }
