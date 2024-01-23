@@ -17,6 +17,7 @@ public class EnemyCtl : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider){
         if (collider.gameObject.tag == "PlayerBullet"){
             Instantiate(destroyedObject, this.transform.position, Quaternion.identity);
+            Destroy(collider.gameObject);
             Destroy(this.gameObject);
         }
     }
