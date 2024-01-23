@@ -7,6 +7,7 @@ Unityにおける2Dゲームのサンプル
 * <https://foozlecc.itch.io/void-fleet-pack-2>
 * <https://foozlecc.itch.io/void-fleet-pack-3>
 * <https://dinvstudio.itch.io/dynamic-space-background-lite-free>
+* <https://ggbot.itch.io/pulstar-font>
 
 ## 参考・引用
 * [スタジオしまづ様] (https://www.youtube.com/playlist?list=PLEkX-p0oUs8xnmHvDwUnogcMqS5acKyH7)

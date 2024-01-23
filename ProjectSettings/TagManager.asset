@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX
@@ -46,6 +47,9 @@ TagManager:
     locked: 0
   - name: Stars
     uniqueID: 2001299677
+    locked: 0
+  - name: Bullet
+    uniqueID: 1520412607
     locked: 0
   - name: Unit
     uniqueID: 88749353

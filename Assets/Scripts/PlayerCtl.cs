@@ -7,6 +7,7 @@ public class PlayerCtl : MonoBehaviour
 {
     [SerializeField] int moveSpeed;
     [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameObject destroyObject;
     [SerializeField] Transform firePointRight;
     [SerializeField] Transform firePointLeft;
 
@@ -36,5 +37,12 @@ public class PlayerCtl : MonoBehaviour
     private void FireTorpedo(){
         Instantiate(bulletPrefab, firePointRight.position, Quaternion.identity);
         Instantiate(bulletPrefab, firePointLeft.position, Quaternion.identity);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider2D){
+        if (collider2D.gameObject.tag == "EnemyUnit"){
+            Instantiate(destroyObject, this.transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
     }
 }
