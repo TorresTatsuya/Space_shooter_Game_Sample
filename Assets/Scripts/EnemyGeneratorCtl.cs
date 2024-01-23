@@ -1,16 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyGeneratorCtl : MonoBehaviour
 {
     [SerializeField] GameObject generateObject;
     private void Start(){
-        InvokeRepeating("GenerateUnit", 0f, 2f);
+        InvokeRepeating("RandomGenerate", 0f, 2f);
     }
 
-    private void GenerateUnit(){
-        Instantiate(generateObject, transform.position, Quaternion.identity);
+    private void RandomGenerate(){
+        Vector3 generatePoint = transform.position + new Vector3(Random.Range(-8f, 8f), 0, 0);
+        GenerateUnit(generatePoint);
+    }
+
+    private void GenerateUnit(Vector3 generatePoint){
+        Instantiate(generateObject, generatePoint, Quaternion.identity);
     }
 }
