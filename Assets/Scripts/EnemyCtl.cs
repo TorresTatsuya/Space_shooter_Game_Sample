@@ -14,6 +14,10 @@ public class EnemyCtl : MonoBehaviour
         this.transform.position += direction * moveSpeed * Time.deltaTime; 
     }
 
+    private void OnBecameInvisible(){
+        Destroy(this.gameObject);
+    }
+
     void OnTriggerEnter2D(Collider2D collider){
         if (collider.gameObject.tag == "PlayerBullet"){
             Instantiate(destroyedObject, this.transform.position, Quaternion.identity);
