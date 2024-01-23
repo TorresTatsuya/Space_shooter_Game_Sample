@@ -3,8 +3,9 @@ using UnityEngine;
 public class EnemyGeneratorCtl : MonoBehaviour
 {
     [SerializeField] GameObject generateObject;
+    [SerializeField] float GenerateInterval;
     private void Start(){
-        InvokeRepeating("RandomGenerate", 0f, 2f);
+        InvokeRepeating("RandomGenerate", 0f, GenerateInterval);
     }
 
     private void RandomGenerate(){
