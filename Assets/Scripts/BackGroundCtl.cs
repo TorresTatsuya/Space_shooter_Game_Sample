@@ -8,7 +8,6 @@ public class BackGroundCtl : MonoBehaviour
     void FixedUpdate(){
         if (transform.position.y <= -20.5f){
             transform.position = new Vector3(transform.position.x, 0f, 0f);
-            Debug.Log("リセットされました");
         }
         transform.position += Vector3.down * Time.deltaTime * moveSpeed;
     }

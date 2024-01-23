@@ -48,6 +48,9 @@ TagManager:
   - name: Stars
     uniqueID: 2001299677
     locked: 0
+  - name: Bullet
+    uniqueID: 1520412607
+    locked: 0
   - name: Unit
     uniqueID: 88749353
     locked: 0

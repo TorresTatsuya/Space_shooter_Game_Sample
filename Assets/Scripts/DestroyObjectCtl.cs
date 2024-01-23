@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DestroyObjectCtl : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] float lifeTime;
     void Start()
     {
-           Invoke("DestroyObject", 0.7f);
+           Invoke("DestroyObject", lifeTime);
     }
 
     private void DestroyObject(){
