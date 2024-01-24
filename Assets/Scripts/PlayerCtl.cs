@@ -10,7 +10,12 @@ public class PlayerCtl : MonoBehaviour
     [SerializeField] GameObject destroyObject;
     [SerializeField] Transform firePointRight;
     [SerializeField] Transform firePointLeft;
+    [SerializeField] AudioClip fireSE;
+    private AudioSource audioSource;
 
+    private void Awake(){
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update(){
         if(Input.GetKeyDown(KeyCode.Space)){
@@ -35,6 +40,7 @@ public class PlayerCtl : MonoBehaviour
     }
 
     private void FireTorpedo(){
+        audioSource.PlayOneShot(fireSE);
         Instantiate(bulletPrefab, firePointRight.position, Quaternion.identity);
         Instantiate(bulletPrefab, firePointLeft.position, Quaternion.identity);
     }
