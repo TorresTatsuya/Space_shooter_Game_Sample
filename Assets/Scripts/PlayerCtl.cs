@@ -12,9 +12,12 @@ public class PlayerCtl : MonoBehaviour
     [SerializeField] Transform firePointLeft;
     [SerializeField] AudioClip fireSE;
     private AudioSource audioSource;
+    private GameCtl gameCtl;
 
     private void Awake(){
         audioSource = GetComponent<AudioSource>();
+        gameCtl = GameObject.Find("GameCtl").GetComponent<GameCtl>();
+
     }
 
     void Update(){
@@ -48,6 +51,7 @@ public class PlayerCtl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider2D){
         if (collider2D.gameObject.tag == "EnemyUnit"){
             Instantiate(destroyObject, this.transform.position, Quaternion.identity);
+            gameCtl.DisplayGameOverText(true);
             Destroy(this.gameObject);
         }
     }
