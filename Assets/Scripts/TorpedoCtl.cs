@@ -11,7 +11,6 @@ public class TorpedoCtl : MonoBehaviour
         }
         float acceleratespeed = Mathf.Lerp(1f, maxSpeed, accelerateTime);
         this.transform.position += Vector3.up * Time.deltaTime * acceleratespeed;
-        Debug.Log(Vector3.up * Time.deltaTime * acceleratespeed);
     }
     
     private void OnBecameInvisible(){

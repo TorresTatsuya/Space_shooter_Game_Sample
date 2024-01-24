@@ -39,7 +39,14 @@ public class PlayerCtl : MonoBehaviour
         //斜め移動が速くならないように正規化
         moveDirection.Normalize();
 
-        this.transform.position += moveDirection * Time.deltaTime * moveSpeed;
+        Vector3 movePosition = transform.position + (moveDirection * Time.deltaTime * moveSpeed);
+
+        //移動範囲の制限
+        float moveRangeLimitX = Mathf.Clamp(movePosition.x, -8.5f, 8.5f);
+        float moveRangeLimitY = Mathf.Clamp(movePosition.y, -5.5f, 3.5f);
+        movePosition = new Vector3(moveRangeLimitX, moveRangeLimitY, movePosition.z);
+
+        this.transform.position = movePosition;
     }
 
     private void FireTorpedo(){
