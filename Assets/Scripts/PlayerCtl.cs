@@ -10,7 +10,15 @@ public class PlayerCtl : MonoBehaviour
     [SerializeField] GameObject destroyObject;
     [SerializeField] Transform firePointRight;
     [SerializeField] Transform firePointLeft;
+    [SerializeField] AudioClip fireSE;
+    private AudioSource audioSource;
+    private GameCtl gameCtl;
 
+    private void Awake(){
+        audioSource = GetComponent<AudioSource>();
+        gameCtl = GameObject.Find("GameCtl").GetComponent<GameCtl>();
+
+    }
 
     void Update(){
         if(Input.GetKeyDown(KeyCode.Space)){
@@ -31,10 +39,18 @@ public class PlayerCtl : MonoBehaviour
         //斜め移動が速くならないように正規化
         moveDirection.Normalize();
 
-        this.transform.position += moveDirection * Time.deltaTime * moveSpeed;
+        Vector3 movePosition = transform.position + (moveDirection * Time.deltaTime * moveSpeed);
+
+        //移動範囲の制限
+        float moveRangeLimitX = Mathf.Clamp(movePosition.x, -8.5f, 8.5f);
+        float moveRangeLimitY = Mathf.Clamp(movePosition.y, -5.5f, 3.5f);
+        movePosition = new Vector3(moveRangeLimitX, moveRangeLimitY, movePosition.z);
+
+        this.transform.position = movePosition;
     }
 
     private void FireTorpedo(){
+        audioSource.PlayOneShot(fireSE);
         Instantiate(bulletPrefab, firePointRight.position, Quaternion.identity);
         Instantiate(bulletPrefab, firePointLeft.position, Quaternion.identity);
     }
@@ -42,6 +58,7 @@ public class PlayerCtl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider2D){
         if (collider2D.gameObject.tag == "EnemyUnit"){
             Instantiate(destroyObject, this.transform.position, Quaternion.identity);
+            gameCtl.DisplayGameOverText(true);
             Destroy(this.gameObject);
         }
     }

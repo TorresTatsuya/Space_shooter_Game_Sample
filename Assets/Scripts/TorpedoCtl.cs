@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class TorpedoCtl : MonoBehaviour
 {
-    [SerializeField] int speed;
+    [SerializeField] int maxSpeed;
+    private float accelerateTime = 0;
     private void FixedUpdate()
     {
-        this.transform.position += Vector3.up * Time.deltaTime * speed;
+        if(accelerateTime <= 1 ){
+            accelerateTime += 0.03f;
+        }
+        float acceleratespeed = Mathf.Lerp(1f, maxSpeed, accelerateTime);
+        this.transform.position += Vector3.up * Time.deltaTime * acceleratespeed;
     }
     
     private void OnBecameInvisible(){
