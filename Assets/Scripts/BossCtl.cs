@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossCtl : MonoBehaviour
 {
     [SerializeField] BombCtl bullet;
     [SerializeField] Transform ShootPoint;
+    [SerializeField] int hp;
     private Vector3 targetPoint = new Vector3(0, 5f, 0);
 
     private void Awake(){
@@ -30,6 +32,16 @@ public class BossCtl : MonoBehaviour
             yield return null;
         }
         transform.position = targetPostion;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider2D){
+        if (collider2D.gameObject.CompareTag("PlayerBullet")){
+            hp -= 1;
+            Destroy(collider2D.gameObject);
+            if(hp == 0){
+                Destroy(this.gameObject);
+            }
+        }
     }
 }
 
