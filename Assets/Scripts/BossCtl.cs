@@ -7,6 +7,7 @@ public class BossCtl : MonoBehaviour
 {
     [SerializeField] BombCtl bullet;
     [SerializeField] Transform ShootPoint;
+    [SerializeField] GameObject DestructionObject;
     [SerializeField] int hp;
     private Vector3 targetPoint = new Vector3(0, 5f, 0);
 
@@ -39,6 +40,7 @@ public class BossCtl : MonoBehaviour
             hp -= 1;
             Destroy(collider2D.gameObject);
             if(hp == 0){
+                Instantiate(DestructionObject, this.transform.position, Quaternion.identity);
                 Destroy(this.gameObject);
             }
         }
