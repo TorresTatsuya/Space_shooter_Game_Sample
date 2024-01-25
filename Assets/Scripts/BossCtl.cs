@@ -10,12 +10,18 @@ public class BossCtl : MonoBehaviour
 
     private void Awake(){
         StartCoroutine(MovePosition(targetPoint, 3f));
-        InvokeRepeating("Shot", 2f, 0.5f);
+        InvokeRepeating("shotThreeWay", 2f, 1f);
     }
 
-    private void Shot(){
+    private void shotThreeWay(){
+        Shot(-Mathf.PI / 2 );
+        Shot(-Mathf.PI / 4 );
+        Shot(-Mathf.PI * 3 / 4 );
+    }
+
+    private void Shot(float anglePi){
         BombCtl bulletPrefab = Instantiate(bullet, ShootPoint.position, Quaternion.identity);
-        bulletPrefab.SetDirection(-Mathf.PI / 2);
+        bulletPrefab.SetDirection(anglePi);
     }
 
     IEnumerator MovePosition(Vector3 targetPostion, float moveSpeed){
