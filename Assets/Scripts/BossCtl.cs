@@ -9,11 +9,13 @@ public class BossCtl : MonoBehaviour
     [SerializeField] Transform ShootPoint;
     [SerializeField] GameObject DestructionObject;
     [SerializeField] int hp;
+    private GameObject bossBody;
     private Vector3 targetPoint = new Vector3(0, 5f, 0);
 
     private void Awake(){
         StartCoroutine(MovePosition(targetPoint, 3f));
         InvokeRepeating("shotThreeWay", 2f, 1f);
+        bossBody = GameObject.Find("BossBase");
     }
 
     private void shotThreeWay(){
@@ -37,13 +39,23 @@ public class BossCtl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider2D){
         if (collider2D.gameObject.CompareTag("PlayerBullet")){
-            hp -= 1;
+            Hitted();
             Destroy(collider2D.gameObject);
-            if(hp == 0){
-                Instantiate(DestructionObject, this.transform.position, Quaternion.identity);
-                Destroy(this.gameObject);
-            }
         }
+    }
+
+    private void Hitted(){
+        hp -= 1;
+        bossBody.GetComponent<SpriteRenderer>().color=new Color32(255,0,0,255);
+        Invoke("ResetColor", 0.2f);
+        if(hp == 0){
+            Instantiate(DestructionObject, this.transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void ResetColor(){
+        bossBody.GetComponent<SpriteRenderer>().color=new Color32(255,255,255,255);
     }
 }
 
