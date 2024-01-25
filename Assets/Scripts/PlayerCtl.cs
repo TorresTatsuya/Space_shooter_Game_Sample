@@ -56,7 +56,7 @@ public class PlayerCtl : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider2D){
-        if (collider2D.gameObject.tag == "EnemyUnit"){
+        if (collider2D.gameObject.tag == "EnemyUnit" || collider2D.gameObject.tag == "EnemyBullet"){
             Instantiate(destroyObject, this.transform.position, Quaternion.identity);
             gameCtl.DisplayGameOverText(true);
             Destroy(this.gameObject);

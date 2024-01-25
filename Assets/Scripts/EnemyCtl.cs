@@ -14,7 +14,7 @@ public class EnemyCtl : MonoBehaviour
     private void Awake(){
         gameCtl = GameObject.Find("GameCtl").GetComponent<GameCtl>();
         offSet = Random.Range(0, 2f*Mathf.PI);
-        InvokeRepeating("ShotBullet", 0.5f, 1f);
+        InvokeRepeating("ShotBullet", Random.Range(0, 1.5f), 1f);
     }
 
     private void FixedUpdate(){

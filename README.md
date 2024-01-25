@@ -11,6 +11,7 @@ Unityにおける2Dゲームのサンプル
 * <https://umipla.com/shooting>
 * <https://dova-s.jp/bgm/play15802.html>
 * <https://otologic.jp/free/se/game-shooter01.html>
+* <https://taira-komori.jpn.org/arms01.html>
 
 ## 参考・引用
 * [スタジオしまづ様] (https://www.youtube.com/playlist?list=PLEkX-p0oUs8xnmHvDwUnogcMqS5acKyH7)
