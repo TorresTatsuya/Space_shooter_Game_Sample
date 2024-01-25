@@ -4,7 +4,9 @@ public class EnemyCtl : MonoBehaviour
 {
     [SerializeField] int Speed;
     [SerializeField] GameObject destroyedObject;
+    [SerializeField] GameObject Weapon;
     [SerializeField] ENEMY_TYPE enemyType;
+    [SerializeField] Transform shootPoint;
 
     private GameCtl gameCtl;
     private float offSet;
@@ -12,6 +14,7 @@ public class EnemyCtl : MonoBehaviour
     private void Awake(){
         gameCtl = GameObject.Find("GameCtl").GetComponent<GameCtl>();
         offSet = Random.Range(0, 2f*Mathf.PI);
+        InvokeRepeating("ShotBullet", 0.5f, 1f);
     }
 
     private void FixedUpdate(){
@@ -21,7 +24,6 @@ public class EnemyCtl : MonoBehaviour
         if(enemyType == ENEMY_TYPE.Lateral){
             MoveEnemy(Speed);    
         }
-
     }
 
     private void MoveEnemy(Vector3 direction, int moveSpeed){
@@ -40,7 +42,7 @@ public class EnemyCtl : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    void OnTriggerEnter2D(Collider2D collider){
+    private void OnTriggerEnter2D(Collider2D collider){
         if (collider.gameObject.tag == "PlayerBullet"){
             gameCtl.AddScore(100);
             Instantiate(destroyedObject, this.transform.position, Quaternion.identity);
@@ -48,6 +50,11 @@ public class EnemyCtl : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    private void ShotBullet(){
+        Instantiate(Weapon, shootPoint.position, Quaternion.identity);
+    }
+    
 
     private enum ENEMY_TYPE{
         Simple,
