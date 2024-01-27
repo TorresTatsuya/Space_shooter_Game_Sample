@@ -8,7 +8,7 @@ public class GameCtl : MonoBehaviour
     public Text ScoreText { get; private set; }
     public Text GameOverText { get; private set;}
     public bool isGameOver { get; set;}
-    private int _score = 0;
+    private float _score = 0;
 
     private void Awake(){
         ScoreText = GameObject.Find("Score").GetComponent<Text>();
@@ -22,11 +22,18 @@ public class GameCtl : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space)){
                 SceneManager.LoadScene("MainScene");
             }
+        }else{
+            TimeAddScore(20);
         }
     }
 
     private void SetScore(){
-        ScoreText.text = "SCORE " + _score; 
+        ScoreText.text = "SCORE " + (int)_score; 
+    }
+
+    private void TimeAddScore(int addScorePerSec){
+        _score += Time.deltaTime * addScorePerSec; 
+        SetScore();
     }
 
     public void AddScore(int value){
