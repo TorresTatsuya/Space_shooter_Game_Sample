@@ -56,3 +56,9 @@ TagManager:
   - name: Unit
     uniqueID: 88749353
     locked: 0
+  - name: Boss
+    uniqueID: 1838397401
+    locked: 0
+  - name: BossBullet
+    uniqueID: 2133992735
+    locked: 0
