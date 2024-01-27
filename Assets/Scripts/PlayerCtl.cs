@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+using UnityEngine.Rendering;
 
 public class PlayerCtl : MonoBehaviour
 {
@@ -11,12 +9,15 @@ public class PlayerCtl : MonoBehaviour
     [SerializeField] Transform firePointRight;
     [SerializeField] Transform firePointLeft;
     [SerializeField] AudioClip fireSE;
+    private int remainingAmmo;
     private AudioSource audioSource;
     private GameCtl gameCtl;
 
     private void Awake(){
         audioSource = GetComponent<AudioSource>();
         gameCtl = GameObject.Find("GameCtl").GetComponent<GameCtl>();
+        remainingAmmo = 5;
+        gameCtl.SetAmmo(remainingAmmo);
 
     }
 
@@ -50,9 +51,14 @@ public class PlayerCtl : MonoBehaviour
     }
 
     private void FireTorpedo(){
-        audioSource.PlayOneShot(fireSE);
-        Instantiate(bulletPrefab, firePointRight.position, Quaternion.identity);
-        Instantiate(bulletPrefab, firePointLeft.position, Quaternion.identity);
+        if ( 0 < remainingAmmo ){
+            audioSource.PlayOneShot(fireSE);
+            Instantiate(bulletPrefab, firePointRight.position, Quaternion.identity);
+            Instantiate(bulletPrefab, firePointLeft.position, Quaternion.identity);
+            remainingAmmo -= 1;
+            gameCtl.SetAmmo(remainingAmmo);
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collider2D){

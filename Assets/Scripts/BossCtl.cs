@@ -40,7 +40,6 @@ public class BossCtl : MonoBehaviour
                 direction.Normalize();
                 MoveBoss(direction, 1f);
             }
-            Debug.Log(playerPositonX);
         }
     }
 
