@@ -1,6 +1,6 @@
-using System;
+// using System;
 using System.Collections;
-using Unity.Mathematics;
+// using Unity.Mathematics;
 using UnityEngine;
 
 public class BossCtl : MonoBehaviour
@@ -26,16 +26,16 @@ public class BossCtl : MonoBehaviour
     }
 
     IEnumerator CPU(){
-        yield return new WaitForSeconds(2f);
-        yield return RepeatingShot(3, 6, 0.5f);
-        yield return new WaitForSeconds(1f);
-        yield return RepeatingShot(6, 8, 0.5f);
-        yield return new WaitForSeconds(1f);
-        yield return RapidShotBeam(10);
+        while(true){
+            yield return new WaitForSeconds(1f);
+            yield return RepeatingShot(Random.Range(3, 6), Random.Range(6, 12), 0.5f);
+            yield return new WaitForSeconds(1f);
+            yield return RapidShotBeam(Random.Range(5, 10));
+        }
     }
 
     private void ShotEveryDirection(int valOfBullet){
-            float angle =  (MathF.PI * 2) / valOfBullet;
+            float angle =  (Mathf.PI * 2) / valOfBullet;
         for (int num = 0; num < valOfBullet; num++){
             Shot(angle * num);
         }
