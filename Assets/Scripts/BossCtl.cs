@@ -1,11 +1,4 @@
-// using System;
 using System.Collections;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
-using UnityEditor.Build;
-
-
-// using Unity.Mathematics;
 using UnityEngine;
 
 public class BossCtl : MonoBehaviour
@@ -46,6 +39,8 @@ public class BossCtl : MonoBehaviour
 
     IEnumerator CPU(){
         while(true){
+            yield return new WaitForSeconds(4f);
+            yield return ShotThreeWay(10);
             yield return new WaitForSeconds(1f);
             yield return RepeatingShot(Random.Range(3, 6), Random.Range(6, 12), 0.5f);
             yield return new WaitForSeconds(1f);
@@ -65,10 +60,19 @@ public class BossCtl : MonoBehaviour
             Shot(angle * num);
         }
     }
-    private void ShotThreeWay(){
-        Shot(-Mathf.PI / 2 );
-        Shot(-Mathf.PI / 4 );
-        Shot(-Mathf.PI * 3 / 4 );
+    IEnumerator ShotThreeWay(int wave){
+        for ( int x = 0; x < wave; x++ ){
+            if ( player != null ){
+                Vector3 playerPositon = player.transform.position + new Vector3(0, 4f, 0);
+                Vector3 targetAngle = playerPositon - transform.position;
+                float targetPi = Mathf.Atan2( targetAngle.y  , targetAngle.x );
+                Debug.Log(player.transform.position);
+                Shot( targetPi );
+                Shot( targetPi + Mathf.PI / 4);
+                Shot( targetPi - Mathf.PI / 4);
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
     }
 
     private void Shot(float anglePi){
