@@ -9,15 +9,17 @@ public class BossCtl : MonoBehaviour
     [SerializeField] Transform ShootPoint;
     [SerializeField] GameObject DestructionObject;
     [SerializeField] int hp;
+    private GameCtl gameCtl;
     private GameObject bossBody;
     private Vector3 targetPoint = new Vector3(0, 5f, 0);
 
     private void Awake(){
+        gameCtl = GameObject.Find("GameCtl").GetComponent<GameCtl>();
         StartCoroutine(MovePosition(targetPoint, 3f));
         InvokeRepeating("shotThreeWay", 2f, 1f);
         bossBody = GameObject.Find("BossBase");
     }
-
+    
     private void shotThreeWay(){
         Shot(-Mathf.PI / 2 );
         Shot(-Mathf.PI / 4 );
@@ -48,8 +50,10 @@ public class BossCtl : MonoBehaviour
         hp -= 1;
         bossBody.GetComponent<SpriteRenderer>().color=new Color32(255,0,0,255);
         Invoke("ResetColor", 0.2f);
+        gameCtl.AddScore(5);
         if(hp == 0){
             Instantiate(DestructionObject, this.transform.position, Quaternion.identity);
+            gameCtl.AddScore(1000);
             Destroy(this.gameObject);
         }
     }
