@@ -52,7 +52,8 @@ public class EnemyCtl : MonoBehaviour
     }
 
     private void ShotBullet(){
-        Instantiate(Weapon, shootPoint.position, Quaternion.identity);
+        GameObject bullet = Instantiate(Weapon, shootPoint.position, Quaternion.identity);
+        bullet.GetComponent<BeamBulletCtl>().SetSpeed(5);
     }
     
 

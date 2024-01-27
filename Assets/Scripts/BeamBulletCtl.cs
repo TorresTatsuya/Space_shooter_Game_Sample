@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class BeamBulletCtl : MonoBehaviour
 {
-    [SerializeField] int speed;
+    public int Speed { get; set; }
     // Start is called before the first frame update
-    void Start()
+    public void SetSpeed(int value)
     {
-        
+        Speed = value;
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        this.transform.position += Vector3.down * speed * Time.deltaTime;   
+        this.transform.position += Vector3.down * Speed * Time.deltaTime;   
     }
     
     private void OnBecameInvisible(){

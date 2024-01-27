@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class BossCtl : MonoBehaviour
 {
-    [SerializeField] BombCtl bullet;
+    [SerializeField] BombCtl bombBullet;
+    [SerializeField] GameObject beamBullet;
     [SerializeField] Transform ShootPoint;
     [SerializeField] GameObject DestructionObject;
     [SerializeField] int hp;
@@ -15,9 +16,22 @@ public class BossCtl : MonoBehaviour
 
     private void Awake(){
         gameCtl = GameObject.Find("GameCtl").GetComponent<GameCtl>();
-        StartCoroutine(MovePosition(targetPoint, 3f));
-        StartCoroutine(RepeatingShot(8, 1f));
         bossBody = GameObject.Find("BossBase");
+        beamBullet.GetComponent<BeamBulletCtl>().Speed = 20;
+    }
+
+    private void Start(){
+        StartCoroutine(MovePosition(targetPoint, 3f));
+        StartCoroutine(CPU());
+    }
+
+    IEnumerator CPU(){
+        yield return new WaitForSeconds(2f);
+        yield return RepeatingShot(3, 6, 0.5f);
+        yield return new WaitForSeconds(1f);
+        yield return RepeatingShot(6, 8, 0.5f);
+        yield return new WaitForSeconds(1f);
+        yield return RapidShotBeam(10);
     }
 
     private void ShotEveryDirection(int valOfBullet){
@@ -33,12 +47,24 @@ public class BossCtl : MonoBehaviour
     }
 
     private void Shot(float anglePi){
-        BombCtl bulletPrefab = Instantiate(bullet, ShootPoint.position, Quaternion.identity);
+        BombCtl bulletPrefab = Instantiate(bombBullet, ShootPoint.position, Quaternion.identity);
         bulletPrefab.SetDirection(anglePi);
     }
-    IEnumerator RepeatingShot(int wave, float interval){
+
+    IEnumerator RapidShotBeam(int shotWave){
+        Vector3 shootPointRight = ShootPoint.position + new Vector3(0.5f, 0, 0);
+        Vector3 shootPointLeft = ShootPoint.position + new Vector3(-0.5f, 0, 0);
+        for (int x = 0; x < shotWave; x++){
+            GameObject bullet = Instantiate(beamBullet, shootPointRight, Quaternion.identity);
+            bullet.GetComponent<BeamBulletCtl>().SetSpeed(10);
+            bullet = Instantiate(beamBullet, shootPointLeft, Quaternion.identity);
+            bullet.GetComponent<BeamBulletCtl>().SetSpeed(10);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    IEnumerator RepeatingShot(int wave, int numOfBullet, float interval){
         for (int x = 0; x < wave; x++){
-            ShotEveryDirection(8);
+            ShotEveryDirection(numOfBullet);
             yield return new WaitForSeconds(interval);
         }
     }
