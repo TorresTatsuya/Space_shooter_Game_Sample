@@ -1637,6 +1637,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1173470644}
     - target: {fileID: -160853770519677087, guid: 48b69632062092945b10aab7b369446f, type: 3}
+      propertyPath: beamBullet
+      value: 
+      objectReference: {fileID: 7484424034919227158, guid: 0f426c08c81d52d4bb0054ae150f7aab, type: 3}
+    - target: {fileID: -160853770519677087, guid: 48b69632062092945b10aab7b369446f, type: 3}
+      propertyPath: bombBullet
+      value: 
+      objectReference: {fileID: 860261721249003468, guid: 987b393862597a4408f04557f4d53b19, type: 3}
+    - target: {fileID: -160853770519677087, guid: 48b69632062092945b10aab7b369446f, type: 3}
       propertyPath: DestructionObject
       value: 
       objectReference: {fileID: 6902510660062831398, guid: a7bd1f29ae8881047b2af0988ecad29b, type: 3}

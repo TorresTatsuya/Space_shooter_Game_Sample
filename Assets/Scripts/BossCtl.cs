@@ -1,5 +1,9 @@
 // using System;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEditor.Build;
+
+
 // using Unity.Mathematics;
 using UnityEngine;
 
@@ -10,19 +14,34 @@ public class BossCtl : MonoBehaviour
     [SerializeField] Transform ShootPoint;
     [SerializeField] GameObject DestructionObject;
     [SerializeField] int hp;
+    private GameObject player;
     private GameCtl gameCtl;
     private GameObject bossBody;
     private Vector3 targetPoint = new Vector3(0, 5f, 0);
+    private bool isMoving = true;
 
     private void Awake(){
         gameCtl = GameObject.Find("GameCtl").GetComponent<GameCtl>();
         bossBody = GameObject.Find("BossBase");
         beamBullet.GetComponent<BeamBulletCtl>().Speed = 20;
+        player = GameObject.Find("PlayerUnit");
     }
 
     private void Start(){
-        StartCoroutine(MovePosition(targetPoint, 3f));
+        StartCoroutine(MoveFirstPosition(targetPoint, 3f));
         StartCoroutine(CPU());
+    }
+
+    private void FixedUpdate(){
+        if(player != null && isMoving == false ){
+            float playerPositonX = player.transform.position.x;
+            if(playerPositonX != this.transform.position.x){
+                Vector3 direction = new Vector3( playerPositonX - this.transform.position.x, 0, 0);
+                direction.Normalize();
+                MoveBoss(direction, 1f);
+            }
+            Debug.Log(playerPositonX);
+        }
     }
 
     IEnumerator CPU(){
@@ -32,6 +51,10 @@ public class BossCtl : MonoBehaviour
             yield return new WaitForSeconds(1f);
             yield return RapidShotBeam(Random.Range(5, 10));
         }
+    }
+
+    private void MoveBoss(Vector3 direction, float speed){
+        this.transform.position += direction * speed * Time.deltaTime;
     }
 
     private void ShotEveryDirection(int valOfBullet){
@@ -52,9 +75,9 @@ public class BossCtl : MonoBehaviour
     }
 
     IEnumerator RapidShotBeam(int shotWave){
-        Vector3 shootPointRight = ShootPoint.position + new Vector3(0.5f, 0, 0);
-        Vector3 shootPointLeft = ShootPoint.position + new Vector3(-0.5f, 0, 0);
         for (int x = 0; x < shotWave; x++){
+            Vector3 shootPointRight = ShootPoint.position + new Vector3(0.5f, 0, 0);
+            Vector3 shootPointLeft = ShootPoint.position + new Vector3(-0.5f, 0, 0);
             GameObject bullet = Instantiate(beamBullet, shootPointRight, Quaternion.identity);
             bullet.GetComponent<BeamBulletCtl>().SetSpeed(10);
             bullet = Instantiate(beamBullet, shootPointLeft, Quaternion.identity);
@@ -69,12 +92,13 @@ public class BossCtl : MonoBehaviour
         }
     }
 
-    IEnumerator MovePosition(Vector3 targetPostion, float moveSpeed){
+    IEnumerator MoveFirstPosition(Vector3 targetPostion, float moveSpeed){
         while(transform.position != targetPostion){
             transform.position = Vector3.MoveTowards(transform.position, targetPostion, moveSpeed * Time.deltaTime);
             yield return null;
         }
         transform.position = targetPostion;
+        isMoving = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collider2D){
