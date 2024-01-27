@@ -8,6 +8,7 @@ public class GameCtl : MonoBehaviour
 {
     public Text ScoreText { get; private set; }
     public Text AmmoText { get; private set; }
+    public Text ReloadingText { get; private set; }
     public Text GameOverText { get; private set;}
     public bool isGameOver { get; set;}
     private float _score = 0;
@@ -16,8 +17,10 @@ public class GameCtl : MonoBehaviour
         ScoreText = GameObject.Find("Score").GetComponent<Text>();
         AmmoText = GameObject.Find("Ammo").GetComponent<Text>();
         GameOverText = GameObject.Find("GameOver").GetComponent<Text>();
+        ReloadingText = GameObject.Find("Reloading").GetComponent<Text>();
         SetScore();
         DisplayGameOverText(false);
+        DisplayReloading(false);
     }
 
     private void Update(){
@@ -50,6 +53,10 @@ public class GameCtl : MonoBehaviour
 
     public void DisplayGameOverText(bool isDisplay){
         GameOverText.enabled = isDisplay;
+    }
+
+    public void DisplayReloading(bool isDisplay){
+        ReloadingText.enabled = isDisplay;
     }
 
 }

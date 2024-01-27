@@ -1,3 +1,5 @@
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -24,6 +26,9 @@ public class PlayerCtl : MonoBehaviour
     void Update(){
         if(Input.GetKeyDown(KeyCode.Space)){
             FireTorpedo();
+        }
+        if( remainingAmmo == 0){
+            Reload(3);
         }
     }
     void FixedUpdate()
@@ -58,7 +63,20 @@ public class PlayerCtl : MonoBehaviour
             remainingAmmo -= 1;
             gameCtl.SetAmmo(remainingAmmo);
         }
-        
+    }
+
+    private float reloading = 0;
+    private void Reload(float reloadTime){
+        gameCtl.DisplayReloading(true);
+        reloading += Time.deltaTime;
+        if ( reloadTime <= reloading ){
+            remainingAmmo = 5;
+            gameCtl.SetAmmo(remainingAmmo);
+            gameCtl.DisplayReloading(false);
+            reloading = 0;
+        }
+
+
     }
 
     private void OnTriggerEnter2D(Collider2D collider2D){
