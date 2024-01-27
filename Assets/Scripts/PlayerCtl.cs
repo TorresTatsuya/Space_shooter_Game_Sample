@@ -69,6 +69,7 @@ public class PlayerCtl : MonoBehaviour
     private void Reload(float reloadTime){
         gameCtl.DisplayReloading(true);
         reloading += Time.deltaTime;
+        gameCtl.DisplayReloadBar(reloading, reloadTime);
         if ( reloadTime <= reloading ){
             remainingAmmo = 5;
             gameCtl.SetAmmo(remainingAmmo);

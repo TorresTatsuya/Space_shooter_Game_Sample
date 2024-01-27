@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
+using UnityEngine.Rendering;
+using System.Runtime.InteropServices;
 
 
 public class GameCtl : MonoBehaviour
@@ -10,6 +11,7 @@ public class GameCtl : MonoBehaviour
     public Text AmmoText { get; private set; }
     public Text ReloadingText { get; private set; }
     public Text GameOverText { get; private set;}
+    public Image ReloadingBar { get; private set;}
     public bool isGameOver { get; set;}
     private float _score = 0;
 
@@ -18,6 +20,7 @@ public class GameCtl : MonoBehaviour
         AmmoText = GameObject.Find("Ammo").GetComponent<Text>();
         GameOverText = GameObject.Find("GameOver").GetComponent<Text>();
         ReloadingText = GameObject.Find("Reloading").GetComponent<Text>();
+        ReloadingBar = GameObject.Find("ReloadBar").GetComponent<Image>();
         SetScore();
         DisplayGameOverText(false);
         DisplayReloading(false);
@@ -56,7 +59,12 @@ public class GameCtl : MonoBehaviour
     }
 
     public void DisplayReloading(bool isDisplay){
+        ReloadingBar.enabled = isDisplay;
         ReloadingText.enabled = isDisplay;
+    }
+
+    public void DisplayReloadBar(float reloading, float maxReloadTime){
+        ReloadingBar.transform.localScale = new Vector3(reloading / maxReloadTime , ReloadingBar.transform.localScale.y , 0);
     }
 
 }
