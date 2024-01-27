@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class BossCtl : MonoBehaviour
@@ -16,11 +16,17 @@ public class BossCtl : MonoBehaviour
     private void Awake(){
         gameCtl = GameObject.Find("GameCtl").GetComponent<GameCtl>();
         StartCoroutine(MovePosition(targetPoint, 3f));
-        InvokeRepeating("shotThreeWay", 2f, 1f);
+        StartCoroutine(RepeatingShot(8, 1f));
         bossBody = GameObject.Find("BossBase");
     }
-    
-    private void shotThreeWay(){
+
+    private void ShotEveryDirection(int valOfBullet){
+            float angle =  (MathF.PI * 2) / valOfBullet;
+        for (int num = 0; num < valOfBullet; num++){
+            Shot(angle * num);
+        }
+    }
+    private void ShotThreeWay(){
         Shot(-Mathf.PI / 2 );
         Shot(-Mathf.PI / 4 );
         Shot(-Mathf.PI * 3 / 4 );
@@ -29,6 +35,12 @@ public class BossCtl : MonoBehaviour
     private void Shot(float anglePi){
         BombCtl bulletPrefab = Instantiate(bullet, ShootPoint.position, Quaternion.identity);
         bulletPrefab.SetDirection(anglePi);
+    }
+    IEnumerator RepeatingShot(int wave, float interval){
+        for (int x = 0; x < wave; x++){
+            ShotEveryDirection(8);
+            yield return new WaitForSeconds(interval);
+        }
     }
 
     IEnumerator MovePosition(Vector3 targetPostion, float moveSpeed){
