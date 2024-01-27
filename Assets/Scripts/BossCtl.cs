@@ -1,5 +1,6 @@
 // using System;
 using System.Collections;
+using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEditor.Build;
 
@@ -48,6 +49,8 @@ public class BossCtl : MonoBehaviour
             yield return new WaitForSeconds(1f);
             yield return RepeatingShot(Random.Range(3, 6), Random.Range(6, 12), 0.5f);
             yield return new WaitForSeconds(1f);
+            yield return ShotCurve(Random.Range(24, 32), 0.1f, Mathf.PI);
+            yield return new WaitForSeconds(1f);
             yield return RapidShotBeam(Random.Range(5, 10));
         }
     }
@@ -73,6 +76,14 @@ public class BossCtl : MonoBehaviour
         bulletPrefab.SetDirection(anglePi);
     }
 
+    IEnumerator ShotCurve(int valOfBUllet, float interval, float offsetPi){
+        float angle =  (Mathf.PI * 2) / valOfBUllet;    
+        for ( int x = 0; x < valOfBUllet; x++){
+            Shot( angle * x );
+            Shot( angle * x + offsetPi );
+            yield return new WaitForSeconds(interval);
+        } 
+    }
     IEnumerator RapidShotBeam(int shotWave){
         for (int x = 0; x < shotWave; x++){
             Vector3 shootPointRight = ShootPoint.position + new Vector3(0.5f, 0, 0);
