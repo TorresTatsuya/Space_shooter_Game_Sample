@@ -1,7 +1,10 @@
 # Space_shooter_Game_Sample 
 
 ## 概要
-Unityにおける2Dゲームのサンプル
+Unityにおける2Dシューティングゲームのサンプル
+
+## デモ動画
+https://github.com/TorresTatsuya/Space_shooter_Game_Sample/assets/150040285/a96faeb6-2ebd-4572-8d0e-b86cf03cc607
 
 ## 使用したアセット
 * <https://foozlecc.itch.io/void-fleet-pack-2>
