@@ -39,14 +39,22 @@ public class BossCtl : MonoBehaviour
 
     IEnumerator CPU(){
         while(true){
-            yield return new WaitForSeconds(4f);
-            yield return ShotThreeWay(10);
+            int randomAction = Random.Range(0, 3);
+            switch(randomAction){
+                case 0:
+                yield return RapidShotBeam(Random.Range(5, 10));
+                break;
+                case 1:
+                yield return ShotCurve(Random.Range(24, 32), 0.1f, Mathf.PI);
+                break;
+                case 2:
+                yield return RepeatingShot(Random.Range(3, 6), Random.Range(6, 12), 0.5f);
+                break;
+                case 3:
+                yield return ShotThreeWay(Random.Range(5, 10));
+                break;
+            }
             yield return new WaitForSeconds(1f);
-            yield return RepeatingShot(Random.Range(3, 6), Random.Range(6, 12), 0.5f);
-            yield return new WaitForSeconds(1f);
-            yield return ShotCurve(Random.Range(24, 32), 0.1f, Mathf.PI);
-            yield return new WaitForSeconds(1f);
-            yield return RapidShotBeam(Random.Range(5, 10));
         }
     }
 

@@ -28,7 +28,7 @@ public class PlayerCtl : MonoBehaviour
             FireTorpedo();
         }
         if( remainingAmmo == 0){
-            Reload(3);
+            Reload(2);
         }
     }
     void FixedUpdate()

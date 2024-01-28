@@ -16,6 +16,7 @@ public class GameCtl : MonoBehaviour
     private float _score = 0;
 
     private void Awake(){
+        Screen.SetResolution(1920, 1080, false);
         ScoreText = GameObject.Find("Score").GetComponent<Text>();
         AmmoText = GameObject.Find("Ammo").GetComponent<Text>();
         GameOverText = GameObject.Find("GameOver").GetComponent<Text>();
